@@ -8,9 +8,10 @@ import { getRequest } from "../../lib/utils";
 import { useEffect, useState } from "react";
 import type JadwalDashboard from "./JadwalDashboard";
 import AppCard from "../../components/AppCard";
+import { Link } from "react-router-dom";
 
 export default function DashboardPage() {
-  const { loading, dashboardData } = getDashboardData()
+  const { loading, dashboardData } = useDashboardData()
 
   if (loading) {
     return null
@@ -63,10 +64,11 @@ export default function DashboardPage() {
                   <td className="!text-start">{formatDate(jadwal.jadwal, "EEEE, dd MMMM yyyy | HH:mm")}</td>
                   <td>{jadwal.jlhPeserta}</td>
                   <td>
-                    {/* TODO: to details */}
-                    <Button color="inherit" className="!text-neutral-400 !text-base">
-                      Detail
-                    </Button>
+                    <Link to={`/jadwal_test/details/${jadwal.id}`}>
+                      <Button color="inherit" className="!text-neutral-400 !text-base">
+                        Detail
+                      </Button>
+                    </Link>
                   </td>
                 </tr>
               )
@@ -86,7 +88,7 @@ interface DashboardDataResponse {
     totalUpcoming: number
   }
 }
-function getDashboardData() {
+function useDashboardData() {
   const [loading, setLoading] = useState(true)
   const [dashboardData, setDashboardData] = useState<{
     totalTest: number

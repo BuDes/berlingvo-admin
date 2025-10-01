@@ -1,15 +1,15 @@
 import { Button } from "@mui/material";
 import AppCard from "../../components/AppCard";
 import { useEffect, useState } from "react";
-import type JadwalTest from "./JadwalTest";
+import type JadwalTest from "./types/JadwalTest";
 import { BASE_URL } from "../../lib/constants";
 import { getRequest } from "../../lib/utils";
 import { formatDate } from "date-fns";
-import { jadwalTestFromJson } from "./JadwalTest";
+import { jadwalTestFromJson } from "./types/JadwalTest";
 import { Link } from "react-router-dom";
 
 export default function JadwalTestPage() {
-  const { loading, jadwal } = getJadwalTest()
+  const { loading, jadwal } = useJadwalTest()
 
   const getColor = (status: string) => {
     if (status === "Terjadwal") return "text-blue-500"
@@ -50,10 +50,11 @@ export default function JadwalTestPage() {
                   <td>{item.jlhPeserta}</td>
                   <td className={getColor(item.status)}>{item.status}</td>
                   <td>
-                    {/* TODO: to details */}
-                    <Button color="inherit" className="!text-neutral-400 !text-base">
-                      Detail
-                    </Button>
+                    <Link to={`/jadwal_test/details/${item.id}`}>
+                      <Button color="inherit" className="!text-neutral-400 !text-base">
+                        Detail
+                      </Button>
+                    </Link>
                   </td>
                 </tr>
               )
@@ -65,7 +66,7 @@ export default function JadwalTestPage() {
   )
 }
 
-function getJadwalTest() {
+function useJadwalTest() {
   const [loading, setLoading] = useState(true)
   const [jadwal, setJadwal] = useState<JadwalTest[]>([])
 
