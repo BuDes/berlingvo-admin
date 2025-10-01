@@ -1,6 +1,6 @@
 import { type ReactNode } from "react"
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
-import { MdLogout, MdOutlineDashboard } from "react-icons/md";
+import { MdLogout, MdOutlineCalendarMonth, MdOutlineDashboard } from "react-icons/md";
 
 export default function MainLayout() {
   const navigate = useNavigate()
@@ -30,8 +30,12 @@ export default function MainLayout() {
         </Link>
 
         <NavItem to="/">
-          <MdOutlineDashboard size={24} className="mr-3" />
+          <MdOutlineDashboard size={24} className="mr-5" />
           Dashboard
+        </NavItem>
+        <NavItem to="/jadwal_test">
+          <MdOutlineCalendarMonth size={24} className="mr-5" />
+          Jadwal Test
         </NavItem>
 
         <button
@@ -45,7 +49,9 @@ export default function MainLayout() {
           Logout
         </button>
       </div>
-      <Outlet />
+      <div className="p-8 flex-1 flex flex-col">
+        <Outlet />
+      </div>
     </main>
   )
 }
@@ -63,7 +69,7 @@ function NavItem({ to, children }:NavItemProps) {
       to={to}
       className={`
         duration-200 py-4 px-8 font-semibold text-start
-        text-xl flex items-center
+        text-lg flex items-center
         ${selected ? "bg-black/20" : "hover:bg-white/20"}
       `}
     >

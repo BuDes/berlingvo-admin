@@ -1,4 +1,5 @@
 import type { RefObject } from "react"
+import Swal from "sweetalert2";
 
 interface handleFormArgs {
   endpoint: string
@@ -49,4 +50,23 @@ export const getRequest = async <T = any>(endpoint: string) => {
     json,
     data
   }
+}
+
+interface showConfirmArgs {
+  title: string
+  confirmText?: string
+}
+export async function showConfirm({ title, confirmText = "Iya" }: showConfirmArgs) {
+  const result = await Swal.fire({
+    title,
+    icon: "question",
+    confirmButtonText: confirmText,
+    showCancelButton: true,
+    cancelButtonText: "Batal",
+    reverseButtons: true,
+    confirmButtonColor: "var(--color-primary)",
+    cancelButtonColor: "var(--color-neutral-400)"
+  })
+
+  return result.isConfirmed
 }

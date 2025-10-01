@@ -7,6 +7,7 @@ import { BASE_URL } from "../../lib/constants";
 import { getRequest } from "../../lib/utils";
 import { useEffect, useState } from "react";
 import type JadwalDashboard from "./JadwalDashboard";
+import AppCard from "../../components/AppCard";
 
 export default function DashboardPage() {
   const { loading, dashboardData } = getDashboardData()
@@ -20,7 +21,7 @@ export default function DashboardPage() {
   }
   
   return (
-    <div className="p-8 flex-1 flex flex-col">
+    <>
       <div className="flex flex-wrap space-x-8">
         <DashboardCard
           icon={<MdOutlineCheckCircle />}
@@ -39,14 +40,11 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="
-        w-full bg-white rounded-2xl shadow-xl shadow-black/10 p-8 mt-12 flex-1
-      ">
-        <h1 className="text-2xl text-neutral-400 font-semibold">Jadwal Test Mendatang</h1>
+      <AppCard title="Jadwal Test Mendatang" className="mt-12 flex-1">
         <table className="app-table">
           <thead>
             <tr>
-              <th>#</th>
+              <th className="w-4">#</th>
               <th>Jadwal</th>
               <th>Jumlah Peserta</th>
               <th>Aksi</th>
@@ -61,10 +59,11 @@ export default function DashboardPage() {
             {dashboardData.upcoming.map((jadwal, index) => {
               return (
                 <tr key={jadwal.id}>
-                  <td className="w-4">{index + 1}</td>
-                  <td className="!text-start">{formatDate(jadwal.jadwal, "EEEE, dd MMMM yyyy")}</td>
+                  <td>{index + 1}</td>
+                  <td className="!text-start">{formatDate(jadwal.jadwal, "EEEE, dd MMMM yyyy | HH:mm")}</td>
                   <td>{jadwal.jlhPeserta}</td>
                   <td>
+                    {/* TODO: to details */}
                     <Button color="inherit" className="!text-neutral-400 !text-base">
                       Detail
                     </Button>
@@ -74,8 +73,8 @@ export default function DashboardPage() {
             })}
           </tbody>
         </table>
-      </div>
-    </div>
+      </AppCard>
+    </>
   )
 }
 

@@ -2,6 +2,8 @@ import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom"
 import LoginPage from "./features/Login"
 import DashboardPage from "./features/Dashboard"
 import MainLayout from "./components/MainLayout"
+import JadwalTestPage from "./features/JadwalTest"
+import AddJadwalTestPage from "./features/JadwalTest/AddJadwalTestPage"
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
 
         <Route element={<MainLayout />}>
           <Route path="/" element={<DashboardPage />} />
+          <Route path="/jadwal_test" element={<JadwalTestPage />} />
+          <Route path="/jadwal_test/add" element={<AddJadwalTestPage />} />
         </Route>
       </Route>
     </Routes>
