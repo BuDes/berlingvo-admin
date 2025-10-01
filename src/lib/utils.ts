@@ -7,7 +7,11 @@ interface handleFormArgs {
   setError: (error: string | null) => void
   method?: "POST" | "PUT" | "DELETE"
 }
-export async function handleForm({ endpoint, body, setLoading, setError, method = "POST" }: handleFormArgs): Promise<boolean> {
+interface handleFormResponse {
+  status: boolean
+  data: any
+}
+export async function handleForm({ endpoint, body, setLoading, setError, method = "POST" }: handleFormArgs): Promise<handleFormResponse> {
   try {
     setLoading(true)
     setError(null)
@@ -17,21 +21,32 @@ export async function handleForm({ endpoint, body, setLoading, setError, method 
       body,  
     })
     setLoading(false)
+    const { message, data } = await response.json()
 
     if (response.status < 300) {
       setError(null)
-      return true
+      return { status: true, data }
     }
 
-    const json = await response.json()
-    setError(json["message"] ?? "Terjadi kesalahan")
-    return false
+    setError(message ?? "Terjadi kesalahan")
+    return { status: false, data }
   } catch (error) {
     setError("Terjadi kesalahan")
-    return false
+    return { status: false, data: null }
   }
 }
 
 export function getTextFieldValue(key: RefObject<HTMLDivElement | null>) {
   return key.current?.querySelector("input")?.value
+}
+
+export const getRequest = async <T = any>(endpoint: string) => {
+  const response = await fetch(endpoint)
+  const json = await response.json()
+  const data = json.data as T
+  return {
+    status: response.status,
+    json,
+    data
+  }
 }

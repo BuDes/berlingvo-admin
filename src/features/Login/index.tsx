@@ -3,12 +3,14 @@ import { createRef, useState, type FormEventHandler } from "react"
 import { getTextFieldValue, handleForm } from "../../lib/utils"
 import { BASE_URL } from "../../lib/constants"
 import ErrorView from "../../components/ErrorView"
+import { useNavigate } from "react-router-dom"
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const usernameRef = createRef<HTMLDivElement>()
   const passwordRef = createRef<HTMLDivElement>()
+  const navigate = useNavigate()
   
   const submitLogin: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
@@ -17,13 +19,17 @@ export default function LoginPage() {
     const password = getTextFieldValue(passwordRef)
     
     const body = JSON.stringify({ username, password })
-    const success = await handleForm({
+    const response = await handleForm({
       setLoading,
       setError,
       endpoint,
       body
     })
-    console.log(success)
+    const { status, data } = response
+    if (status) {
+      localStorage.setItem("USERNAME", data["username"])
+      navigate("/")
+    }
   }
   
   return (
