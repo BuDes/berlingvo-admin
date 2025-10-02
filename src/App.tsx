@@ -5,6 +5,7 @@ import MainLayout from "./components/MainLayout"
 import JadwalTestPage from "./features/JadwalTest"
 import AddJadwalTestPage from "./features/JadwalTest/AddJadwalTestPage"
 import DetailJadwallPage from "./features/JadwalTest/DetailJadwallPage"
+import MateriPage from "./features/Materi"
 
 function App() {
   return (
@@ -14,9 +15,12 @@ function App() {
 
         <Route element={<MainLayout />}>
           <Route path="/" element={<DashboardPage />} />
+          
           <Route path="/jadwal_test" element={<JadwalTestPage />} />
           <Route path="/jadwal_test/add" element={<AddJadwalTestPage />} />
           <Route path="/jadwal_test/details/:id" element={<DetailJadwallPage />} />
+          
+          <Route path="/materi" element={<MateriPage />} />
         </Route>
       </Route>
     </Routes>

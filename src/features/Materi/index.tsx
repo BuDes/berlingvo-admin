@@ -1,0 +1,121 @@
+import { Button, IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
+import AppCard from "../../components/AppCard";
+import { useEffect, useState } from "react";
+import type JenisMateri from "./types/JenisMateri";
+import type Materi from "./types/Materi";
+import { BASE_URL } from "../../lib/constants";
+import { getRequest } from "../../lib/utils";
+import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+
+export default function MateriPage() {
+  const { loading, jenis, materi } = useMateri()
+
+  if (loading) {
+    return null
+  }
+  
+  // TODO: create, update, delete jenis;;
+  // TODO: create, update, delete materi;;
+  return (
+    <>
+      <AppCard title="Jenis Materi">
+        {/* TODO: add page */}
+        <Link to="/jadwal_test/add" className="block mt-8 w-fit">
+          <Button variant="contained">+ Tambah</Button>
+        </Link>
+        <table className="app-table">
+          <thead>
+            <tr>
+              <th className="w-4">#</th>
+              <th>Nama Jenis</th>
+              <th className="w-48">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jenis.map((item, index) => {
+              return (
+                <tr key={item.id}>
+                  <td>{index + 1}</td>
+                  <td>{item.nama}</td>
+                  <td>
+                    <IconButton>
+                      <MdOutlineEdit className="text-neutral-400" />
+                    </IconButton>
+                    <IconButton>
+                      <MdOutlineDelete className="text-red-400" />
+                    </IconButton>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </AppCard>
+
+      <AppCard title="Materi" className="mt-4">
+        {/* TODO: add page */}
+        <Link to="/jadwal_test/add" className="block mt-8 w-fit">
+          <Button variant="contained">+ Tambah</Button>
+        </Link>
+        <table className="app-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jenis Materi</th>
+              <th>Isi</th>
+              <th>Video</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {materi.map((item, index) => {
+              return (
+                <tr key={item.id}>
+                  <td>{index + 1}</td>
+                  <td>{item.jenis.nama}</td>
+                  <td className="max-w-[24rem]">
+                    <p className="line-clamp-2 overflow-ellipsis">{item.content}</p>
+                  </td>
+                  <td>{item.videoFile ? "Tersedia" : "Tidak Tersedia"}</td>
+                  <td>
+                    <IconButton>
+                      <MdOutlineEdit className="text-neutral-400" />
+                    </IconButton>
+                    <IconButton>
+                      <MdOutlineDelete className="text-red-400" />
+                    </IconButton>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </AppCard>
+    </>
+  )
+}
+
+interface MateriResponse {
+  jenis: JenisMateri[]
+  materi: Materi[]
+}
+function useMateri() {
+  const [loading, setLoading] = useState(true)
+  const [jenis, setJenis] = useState<JenisMateri[]>([])
+  const [materi, setMateri] = useState<Materi[]>([])
+
+  useEffect(() => {
+    const fetchMateri = async () => {
+      const endpoint = `${BASE_URL}/materi/materi_and_jenis`
+      setLoading(true)
+      const response = await getRequest<MateriResponse>(endpoint)
+      setLoading(false)
+      setJenis(response.data.jenis)
+      setMateri(response.data.materi)
+    }
+    fetchMateri()
+  }, [])
+
+  return { loading, jenis, materi }
+}
