@@ -23,7 +23,7 @@ export default function DetailJadwallPage() {
   const timeString = formatDate(jadwal.jadwal, "HH:mm")
   return (
     <AppCard
-      title={`Jadwal Test ${formatDate(jadwal.jadwal, "dd/MM/yyyy")}`}
+      title={jadwal.nama}
       backRoute="/jadwal_test"
     >
       <div className="mt-8">

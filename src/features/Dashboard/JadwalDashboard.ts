@@ -1,6 +1,7 @@
 export default interface JadwalDashboard {
   id: string
   jadwal: Date
+  nama: string
   jlhPeserta: number
 }
 

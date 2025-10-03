@@ -29,6 +29,7 @@ export default function MateriPage() {
             <tr>
               <th className="w-4">#</th>
               <th>Nama Jenis</th>
+              <th>Deskripsi</th>
               <th className="w-48">Aksi</th>
             </tr>
           </thead>
@@ -38,6 +39,7 @@ export default function MateriPage() {
                 <tr key={item.id}>
                   <td>{index + 1}</td>
                   <td>{item.nama}</td>
+                  <td>{item.deskripsi}</td>
                   <td>
                     <IconButton>
                       <MdOutlineEdit className="text-neutral-400" />
@@ -75,7 +77,12 @@ export default function MateriPage() {
                   <td>{index + 1}</td>
                   <td>{item.jenis.nama}</td>
                   <td className="max-w-[24rem]">
-                    <p className="line-clamp-2 overflow-ellipsis">{item.content}</p>
+                    <p className={`
+                      line-clamp-2 overflow-ellipsis
+                      ${item.content ? "" : "text-neutral-400 italic"}
+                    `}>
+                      {item.content ?? "Tidak ada isi"}
+                    </p>
                   </td>
                   <td>{item.videoFile ? "Tersedia" : "Tidak Tersedia"}</td>
                   <td>

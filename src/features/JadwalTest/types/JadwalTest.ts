@@ -1,6 +1,7 @@
 export default interface JadwalTest {
   id: string
   jadwal: Date
+  nama: string
   status: "Terjadwal" | "Selesai"
   jlhPeserta: number
 }

@@ -30,6 +30,7 @@ export default function JadwalTestPage() {
           <thead>
             <tr>
               <th className="w-4">#</th>
+              <th>Nama Test</th>
               <th>Jadwal</th>
               <th>Jumlah Peserta</th>
               <th>Status</th>
@@ -39,13 +40,16 @@ export default function JadwalTestPage() {
           <tbody>
             {jadwal.length === 0 && (
               <tr>
-                <td colSpan={4} className="text-neutral-500">Tidak aja jadwal test yang akan datang</td>
+                <td colSpan={4} className="text-neutral-500 !text-center">
+                  Tidak aja jadwal test yang akan datang
+                </td>
               </tr>
             )}
             {jadwal.map((item, index) => {
               return (
                 <tr key={item.id}>
                   <td>{index + 1}</td>
+                  <td>{item.nama}</td>
                   <td className="!text-start">{formatDate(item.jadwal, "EEEE, dd MMMM yyyy | HH:mm")}</td>
                   <td>{item.jlhPeserta}</td>
                   <td className={getColor(item.status)}>{item.status}</td>

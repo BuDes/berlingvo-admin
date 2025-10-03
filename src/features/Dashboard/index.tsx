@@ -46,6 +46,7 @@ export default function DashboardPage() {
           <thead>
             <tr>
               <th className="w-4">#</th>
+              <th>Nama Test</th>
               <th>Jadwal</th>
               <th>Jumlah Peserta</th>
               <th>Aksi</th>
@@ -54,13 +55,16 @@ export default function DashboardPage() {
           <tbody>
             {dashboardData.upcoming.length === 0 && (
               <tr>
-                <td colSpan={4} className="text-neutral-500">Tidak aja jadwal test yang akan datang</td>
+                <td colSpan={4} className="text-neutral-500 !text-center">
+                  Tidak aja jadwal test yang akan datang
+                </td>
               </tr>
             )}
             {dashboardData.upcoming.map((jadwal, index) => {
               return (
                 <tr key={jadwal.id}>
                   <td>{index + 1}</td>
+                  <td>{jadwal.nama}</td>
                   <td className="!text-start">{formatDate(jadwal.jadwal, "EEEE, dd MMMM yyyy | HH:mm")}</td>
                   <td>{jadwal.jlhPeserta}</td>
                   <td>

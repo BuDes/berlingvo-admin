@@ -1,6 +1,7 @@
 export default interface DetailJadwal {
   id: string
   jadwal: Date
+  nama: string
   status: "Terjadwal" | "Selesai"
   peserta: {
     id: string
