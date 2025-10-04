@@ -1,4 +1,4 @@
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import AppCard from "../../components/AppCard";
 import { useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import type JenisMateri from "./types/JenisMateri";
 import type Materi from "./types/Materi";
 import { BASE_URL } from "../../lib/constants";
 import { getRequest } from "../../lib/utils";
-import { MdOutlineDelete, MdOutlineEdit } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 
 export default function MateriPage() {
   const { loading, jenis, materi } = useMateri()
@@ -60,14 +60,14 @@ export default function MateriPage() {
       </AppCard>
 
       <AppCard title="Materi" className="mt-8">
-        {/* TODO: add page */}
-        <Link to="/jadwal_test/add" className="block mt-8 w-fit">
+        <Link to="/materi/add" className="block mt-8 w-fit">
           <Button variant="contained">+ Tambah</Button>
         </Link>
         <table className="app-table">
           <thead>
             <tr>
               <th>#</th>
+              <th>Judul</th>
               <th>Jenis Materi</th>
               <th>Isi</th>
               <th>Video</th>
@@ -79,6 +79,7 @@ export default function MateriPage() {
               return (
                 <tr key={item.id}>
                   <td>{index + 1}</td>
+                  <td>{item.nama}</td>
                   <td>{item.jenis.nama}</td>
                   <td className="max-w-[24rem]">
                     <p className={`
@@ -90,12 +91,12 @@ export default function MateriPage() {
                   </td>
                   <td>{item.videoFile ? "Tersedia" : "Tidak Tersedia"}</td>
                   <td>
-                    <IconButton>
-                      <MdOutlineEdit className="text-neutral-400" />
-                    </IconButton>
-                    <IconButton>
-                      <MdOutlineDelete className="text-red-400" />
-                    </IconButton>
+                    <Link to={`/materi/edit/${item.id}`} className="text-neutral-400">
+                      <Button color="inherit">
+                        <MdOutlineEdit size={24} />
+                        <span className="text-base pl-4">Edit</span>
+                      </Button>
+                    </Link>
                   </td>
                 </tr>
               )

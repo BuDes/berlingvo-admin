@@ -59,6 +59,7 @@ export default function AddJenisPage() {
           type="file"
           className="hidden"
           onChange={onGambarChange}
+          required
         />
         <label htmlFor="gambar" className="flex items-center">
           <Button component="span">Pilih Gambar</Button>

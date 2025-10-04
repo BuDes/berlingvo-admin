@@ -8,6 +8,8 @@ import DetailJadwallPage from "./features/JadwalTest/DetailJadwallPage"
 import MateriPage from "./features/Materi"
 import AddJenisPage from "./features/Materi/AddJenisPage"
 import EditJenisPage from "./features/Materi/EditJenisPage"
+import AddMateriPage from "./features/Materi/AddMateriPage"
+import EditMateriPage from "./features/Materi/EditMateriPage"
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/jadwal_test/details/:id" element={<DetailJadwallPage />} />
           
           <Route path="/materi" element={<MateriPage />} />
+          <Route path="/materi/add" element={<AddMateriPage />} />
+          <Route path="/materi/edit/:id" element={<EditMateriPage />} />
           <Route path="/jenis/add" element={<AddJenisPage />} />
           <Route path="/jenis/edit/:id" element={<EditJenisPage />} />
         </Route>

@@ -9,7 +9,7 @@ import type JenisMateri from "./types/JenisMateri"
 
 export default function EditJenisPage() {
   const { id } = useParams()
-  const { loading: fetchLoading, jenis  } = useJenis(id!)
+  const { loading: fetchLoading, jenis } = useJenis(id!)
   const namaRef = createRef<HTMLInputElement>()
   const deskripsiRef = createRef<HTMLInputElement>()
   const [gambar, setGambar] = useState<File | null>(null)
