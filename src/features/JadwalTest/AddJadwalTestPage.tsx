@@ -36,7 +36,7 @@ export default function AddJadwalTestPage() {
   
   return (
     <AppCard title="+ Jadwal Test Baru">
-      <form onSubmit={submitTambah} className="flex flex-col w-fit pt-6">
+      <form onSubmit={submitTambah} className="flex flex-col w-[24rem] pt-6">
         <ErrorView error={error} />
         <TextField inputRef={namaRef} label="Nama Test" required />
         <LocalizationProvider dateAdapter={AdapterDateFns}>

@@ -55,7 +55,7 @@ export default function DashboardPage() {
           <tbody>
             {dashboardData.upcoming.length === 0 && (
               <tr>
-                <td colSpan={4} className="text-neutral-500 !text-center">
+                <td colSpan={5} className="text-neutral-500 !text-center">
                   Tidak aja jadwal test yang akan datang
                 </td>
               </tr>

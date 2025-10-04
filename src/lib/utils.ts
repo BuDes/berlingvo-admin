@@ -1,24 +1,25 @@
 import type { RefObject } from "react"
-import Swal from "sweetalert2";
+import Swal, { type SweetAlertIcon } from "sweetalert2";
 
 interface handleFormArgs {
   endpoint: string
-  body: any
+  body?: any
   setLoading: (loading: boolean) => void
   setError: (error: string | null) => void
   method?: "POST" | "PUT" | "DELETE"
+  json?: boolean
 }
 interface handleFormResponse {
   status: boolean
   data: any
 }
-export async function handleForm({ endpoint, body, setLoading, setError, method = "POST" }: handleFormArgs): Promise<handleFormResponse> {
+export async function handleForm({ endpoint, body, setLoading, setError, method = "POST", json = true }: handleFormArgs): Promise<handleFormResponse> {
   try {
     setLoading(true)
     setError(null)
     const response = await fetch(endpoint, {
       method,
-      headers: {"Content-Type": "application/json"},
+      headers: json ? {"Content-Type": "application/json"} : undefined,
       body,  
     })
     setLoading(false)
@@ -55,16 +56,18 @@ export const getRequest = async <T = any>(endpoint: string) => {
 interface showConfirmArgs {
   title: string
   confirmText?: string
+  icon?: SweetAlertIcon
+  buttonColor?: string
 }
-export async function showConfirm({ title, confirmText = "Iya" }: showConfirmArgs) {
+export async function showConfirm({ title, confirmText = "Iya", icon = "question", buttonColor = "var(--color-primary)" }: showConfirmArgs) {
   const result = await Swal.fire({
     title,
-    icon: "question",
+    icon: icon,
     confirmButtonText: confirmText,
     showCancelButton: true,
     cancelButtonText: "Batal",
     reverseButtons: true,
-    confirmButtonColor: "var(--color-primary)",
+    confirmButtonColor: buttonColor,
     cancelButtonColor: "var(--color-neutral-400)"
   })
 

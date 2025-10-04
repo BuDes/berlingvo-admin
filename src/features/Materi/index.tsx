@@ -15,19 +15,18 @@ export default function MateriPage() {
     return null
   }
   
-  // TODO: create, update, delete jenis;;
   // TODO: create, update, delete materi;;
   return (
     <>
       <AppCard title="Jenis Materi">
-        {/* TODO: add page */}
-        <Link to="/jadwal_test/add" className="block mt-8 w-fit">
+        <Link to="/jenis/add" className="block mt-8 w-fit">
           <Button variant="contained">+ Tambah</Button>
         </Link>
         <table className="app-table">
           <thead>
             <tr>
               <th className="w-4">#</th>
+              <th>Gambar</th>
               <th>Nama Jenis</th>
               <th>Deskripsi</th>
               <th className="w-48">Aksi</th>
@@ -38,15 +37,20 @@ export default function MateriPage() {
               return (
                 <tr key={item.id}>
                   <td>{index + 1}</td>
+                  <td>
+                    <div className="py-2">
+                      <img src={item.gambar} alt={item.nama} className="h-10" />
+                    </div>
+                  </td>
                   <td>{item.nama}</td>
                   <td>{item.deskripsi}</td>
                   <td>
-                    <IconButton>
-                      <MdOutlineEdit className="text-neutral-400" />
-                    </IconButton>
-                    <IconButton>
-                      <MdOutlineDelete className="text-red-400" />
-                    </IconButton>
+                    <Link to={`/jenis/edit/${item.id}`} className="text-neutral-400">
+                      <Button color="inherit">
+                        <MdOutlineEdit size={24} />
+                        <span className="text-base pl-4">Edit</span>
+                      </Button>
+                    </Link>
                   </td>
                 </tr>
               )
@@ -55,7 +59,7 @@ export default function MateriPage() {
         </table>
       </AppCard>
 
-      <AppCard title="Materi" className="mt-4">
+      <AppCard title="Materi" className="mt-8">
         {/* TODO: add page */}
         <Link to="/jadwal_test/add" className="block mt-8 w-fit">
           <Button variant="contained">+ Tambah</Button>
