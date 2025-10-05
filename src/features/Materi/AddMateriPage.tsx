@@ -66,8 +66,9 @@ export default function AddMateriPage() {
           onChange={onJenisChange}
           displayEmpty
           className="!mt-4"
+          required
         >
-          <MenuItem value="" disabled>--- Pilih Jenis Materi ---</MenuItem>
+          <MenuItem value="" disabled>--- Pilih Jenis Materi ---*</MenuItem>
           {listJenis.map((jenis) => {
             return (
               <MenuItem key={jenis.id} value={jenis.id}>

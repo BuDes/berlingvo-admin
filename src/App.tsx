@@ -10,6 +10,9 @@ import AddJenisPage from "./features/Materi/AddJenisPage"
 import EditJenisPage from "./features/Materi/EditJenisPage"
 import AddMateriPage from "./features/Materi/AddMateriPage"
 import EditMateriPage from "./features/Materi/EditMateriPage"
+import SoalHomePage from "./features/Soal"
+import SoalByJenisPage from "./features/Soal/SoalByJenisPage"
+import AddSoalPage from "./features/Soal/AddSoalPage"
 
 function App() {
   return (
@@ -29,6 +32,10 @@ function App() {
           <Route path="/materi/edit/:id" element={<EditMateriPage />} />
           <Route path="/jenis/add" element={<AddJenisPage />} />
           <Route path="/jenis/edit/:id" element={<EditJenisPage />} />
+
+          <Route path="/soal" element={<SoalHomePage />} />
+          <Route path="/soal/jenis/:idJenis" element={<SoalByJenisPage />} />
+          <Route path="/soal/jenis/:idJenis/add" element={<AddSoalPage />} />
         </Route>
       </Route>
     </Routes>
