@@ -21,7 +21,7 @@ export default function SoalHomePage() {
         {jenis.map((item) => {
           return (
             <Link key={item.id} to={`/soal/jenis/${item.id}`}>
-              <ListItemButton component="a" key={item.id}>
+              <ListItemButton key={item.id}>
                 <ListItemIcon>
                   <img src={item.gambar} alt={item.nama} className="h-10 p-1 w-12 object-contain" />
                 </ListItemIcon>

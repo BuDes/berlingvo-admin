@@ -1,9 +1,9 @@
 import { Button, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material"
 import { createRef, useRef, useState, type ChangeEventHandler } from "react"
-import type { Opsi, TipeSoal } from "./types/new_soal"
 import type NewSoal from "./types/new_soal";
 import AppCard from "../../components/AppCard";
 import { MdClose } from "react-icons/md";
+import type { TipeSoal, Opsi } from "./types/soal";
 
 interface AddSoalFormProps {
   idJenisMateri: string
@@ -44,10 +44,10 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
   const onAudioChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.currentTarget.files?.[0]
     if (!file) return
-    // const newVals = getCurrentVals()
-    // newVals.audioFile = file
+    const newVals = getCurrentVals()
+    newVals.audioFile = file
     setAudio(file)
-    // onChange(formIndex, newVals)
+    onChange(formIndex, newVals)
   }
 
   const updateOpsi = (index: number, value: string) => {

@@ -7,10 +7,17 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import type JenisMateri from "../Materi/types/JenisMateri";
 import { Button } from "@mui/material";
 import { MdOutlineEdit } from "react-icons/md";
+import type { TipeSoal } from "./types/soal";
 
 export default function SoalByJenisPage() {
   const { idJenis } = useParams()
   const { loading, soal, jenis } = useSoal(idJenis!)
+
+  const displayTipe = (tipe: TipeSoal) => {
+    if (tipe === "practice") return "Practice"
+    if (tipe === "test") return "Test"
+    return ""
+  }
 
   if (loading) {
     return null
@@ -47,11 +54,14 @@ export default function SoalByJenisPage() {
             return (
               <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item.tipe}</td>
+                <td>{displayTipe(item.tipe)}</td>
                 <td>{item.pertanyaan}</td>
                 <td>
-                  {/* TODO: edit soal */}
-                  <Link to={`/jenis/edit/${item.id}`} className="text-neutral-400">
+                  <Link
+                    to={`/soal/edit/${item.id}`}
+                    state={{ idJenis }}
+                    className="text-neutral-400"
+                  >
                     <Button color="inherit">
                       <MdOutlineEdit size={24} />
                       <span className="text-base pl-4">Edit</span>

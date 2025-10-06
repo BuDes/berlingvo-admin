@@ -13,6 +13,7 @@ import EditMateriPage from "./features/Materi/EditMateriPage"
 import SoalHomePage from "./features/Soal"
 import SoalByJenisPage from "./features/Soal/SoalByJenisPage"
 import AddSoalPage from "./features/Soal/AddSoalPage"
+import EditSoalPage from "./features/Soal/EditSoalPage"
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/jenis/edit/:id" element={<EditJenisPage />} />
 
           <Route path="/soal" element={<SoalHomePage />} />
+          <Route path="/soal/edit/:id" element={<EditSoalPage />} />
           <Route path="/soal/jenis/:idJenis" element={<SoalByJenisPage />} />
           <Route path="/soal/jenis/:idJenis/add" element={<AddSoalPage />} />
         </Route>
