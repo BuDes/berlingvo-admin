@@ -12,6 +12,7 @@ export default function EditJenisPage() {
   const { loading: fetchLoading, jenis } = useJenis(id!)
   const namaRef = createRef<HTMLInputElement>()
   const deskripsiRef = createRef<HTMLInputElement>()
+  const jlhSoalRef = createRef<HTMLInputElement>()
   const [gambar, setGambar] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -22,10 +23,12 @@ export default function EditJenisPage() {
 
     const nama = namaRef.current?.value
     const deskripsi = deskripsiRef.current?.value
-    if (!nama || !deskripsi) return
+    const jlhSoal = jlhSoalRef.current?.value
+    if (!nama || !deskripsi || !jlhSoal) return
     const formData = new FormData()
     formData.append("nama", nama)
     formData.append("deskripsi", deskripsi)
+    formData.append("jlhSoal", jlhSoal)
     if (gambar) formData.append("file", gambar)
 
     const endpoint = `${BASE_URL}/jenis_materi/edit/${id}`
@@ -79,6 +82,19 @@ export default function EditJenisPage() {
           label="Deskripsi Singkat"
           className="!my-4"
           defaultValue={jenis.deskripsi}
+          required
+        />
+        <TextField
+          inputRef={jlhSoalRef}
+          label="Jumlah Soal"
+          className="!mb-4"
+          type="number"
+          slotProps={{
+            input: {
+              inputProps: { min: 0 }
+            }
+          }}
+          defaultValue={jenis.jlhSoal}
           required
         />
         <input

@@ -10,6 +10,7 @@ import type JenisMateri from "./types/JenisMateri";
 export default function AddMateriPage() {
   const namaRef = createRef<HTMLInputElement>()
   const isiRef = createRef<HTMLInputElement>()
+  const introRef = createRef<HTMLInputElement>()
   const [video, setVideo] = useState<File | null>(null)
   const [jenis, setJenis] = useState<string>("")
   const [loading, setLoading] = useState(false)
@@ -22,11 +23,13 @@ export default function AddMateriPage() {
 
     const nama = namaRef.current?.value
     const isi = isiRef.current?.value
-    if (!nama || !jenis) return
+    const intro = introRef.current?.value
+    if (!nama || !jenis || !intro) return
 
     const formData = new FormData()
     formData.append("nama", nama)
     formData.append("idJenisMateri", jenis)
+    formData.append("intro", intro)
     if (isi) formData.append("content", isi)
     if (video) formData.append("file", video)
 
@@ -68,7 +71,7 @@ export default function AddMateriPage() {
           className="!mt-4"
           required
         >
-          <MenuItem value="" disabled>--- Pilih Jenis Materi ---*</MenuItem>
+          <MenuItem value="" disabled>--- Pilih Jenis Materi --- *</MenuItem>
           {listJenis.map((jenis) => {
             return (
               <MenuItem key={jenis.id} value={jenis.id}>
@@ -78,11 +81,19 @@ export default function AddMateriPage() {
           })}
         </Select>
         <TextField
+          inputRef={introRef}
+          label="Intro"
+          className="!mt-4"
+          multiline
+          required
+          minRows={3}
+        />
+        <TextField
           inputRef={isiRef}
           label="Isi (Opsional)"
           className="!my-4"
           multiline
-          minRows={3}
+          minRows={5}
         />
         <input
           accept="video/*"

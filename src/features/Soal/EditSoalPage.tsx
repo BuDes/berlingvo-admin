@@ -13,6 +13,7 @@ export default function EditSoalPage() {
   const state = useLocation().state
   const idJenis = state?.idJenis
   const pertanyaanRef = createRef<HTMLInputElement>()
+  const pembahasanRef = createRef<HTMLInputElement>()
   const [audio, setAudio] = useState<File | null>(null)
   const [tipe, setTipe] = useState<TipeSoal>("practice")
   const opsi = useRef<Opsi[]>([])
@@ -32,9 +33,11 @@ export default function EditSoalPage() {
     e.preventDefault()
   
     const pertanyaan = pertanyaanRef.current?.value
-    if (!pertanyaan) return
+    const pembahasan = pembahasanRef.current?.value
+    if (!pertanyaan ||!pembahasan ) return
     const formData = new FormData()
     formData.append("pertanyaan", pertanyaan)
+    formData.append("pembahasan", pembahasan)
     formData.append("tipe", tipe)
     formData.append("idOpsiBenar", opsiBenar)
     if (audio) formData.append("audioFile", audio)
@@ -95,6 +98,15 @@ export default function EditSoalPage() {
           inputRef={pertanyaanRef}
           label="Pertanyaan"
           defaultValue={soal.pertanyaan}
+          required
+        />
+        <TextField
+          inputRef={pembahasanRef}
+          label="Pembahasan"
+          defaultValue={soal.pembahasan}
+          className="!mt-4"
+          minRows={2}
+          multiline
           required
         />
         <InputLabel className="!mt-4">Tipe</InputLabel>

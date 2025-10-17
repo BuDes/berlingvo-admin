@@ -3,4 +3,5 @@ export default interface JenisMateri {
   nama: string
   gambar: string
   deskripsi: string
+  jlhSoal: number
 }

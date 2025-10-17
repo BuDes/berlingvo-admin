@@ -15,6 +15,8 @@ interface AddSoalFormProps {
 }
 export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChange, defaultValues, onRemove }: AddSoalFormProps) {
   const pertanyaanRef = createRef<HTMLInputElement>()
+  const pembahasanRef = createRef<HTMLInputElement>()
+  // TODO: change to attachment;;
   const [audio, setAudio] = useState<File | null>(defaultValues.audioFile)
   const [tipe, setTipe] = useState<TipeSoal>(defaultValues.tipe)
   const opsi = useRef<Opsi[]>(defaultValues.opsi)
@@ -23,6 +25,7 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
   const getCurrentVals = (): NewSoal => {
     return {
       pertanyaan: pertanyaanRef.current!.value,
+      pembahasan: pembahasanRef.current!.value,
       idJenisMateri,
       tipe,
       idOpsiBenar: opsiBenar,
@@ -70,6 +73,16 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
           onChange={updateValues}
           label="Pertanyaan"
           defaultValue={defaultValues.pertanyaan}
+          required
+        />
+        <TextField
+          inputRef={pembahasanRef}
+          onChange={updateValues}
+          label="Pembahasan"
+          defaultValue={defaultValues.pertanyaan}
+          className="!mt-4"
+          minRows={2}
+          multiline
           required
         />
         <InputLabel className="!mt-4">Tipe</InputLabel>

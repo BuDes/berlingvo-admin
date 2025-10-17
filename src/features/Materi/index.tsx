@@ -15,7 +15,6 @@ export default function MateriPage() {
     return null
   }
   
-  // TODO: create, update, delete materi;;
   return (
     <>
       <AppCard title="Jenis Materi">
@@ -28,6 +27,7 @@ export default function MateriPage() {
               <th className="w-4">#</th>
               <th>Gambar</th>
               <th>Nama Jenis</th>
+              <th>Jumlah Soal</th>
               <th>Deskripsi</th>
               <th className="w-48">Aksi</th>
             </tr>
@@ -43,6 +43,7 @@ export default function MateriPage() {
                     </div>
                   </td>
                   <td>{item.nama}</td>
+                  <td>{item.jlhSoal}</td>
                   <td>{item.deskripsi}</td>
                   <td>
                     <Link to={`/jenis/edit/${item.id}`} className="text-neutral-400">

@@ -3,6 +3,7 @@ export default interface Soal {
   idOpsiBenar: string
   audioFile?: string
   pertanyaan: string
+  pembahasan: string
   tipe: TipeSoal
   opsi?: Opsi[]
 }
