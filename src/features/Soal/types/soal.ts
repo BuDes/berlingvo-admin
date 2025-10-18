@@ -1,7 +1,7 @@
 export default interface Soal {
   id: string
   idOpsiBenar: string
-  audioFile?: string
+  idAttachment: string | null
   pertanyaan: string
   pembahasan: string
   tipe: TipeSoal

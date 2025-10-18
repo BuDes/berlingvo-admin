@@ -1,9 +1,13 @@
 import { Button, InputLabel, MenuItem, Select, TextField, type SelectChangeEvent } from "@mui/material"
-import { createRef, useRef, useState, type ChangeEventHandler } from "react"
+import { createRef, useEffect, useRef, useState, type ChangeEventHandler } from "react"
 import type NewSoal from "./types/new_soal";
 import AppCard from "../../components/AppCard";
 import { MdClose } from "react-icons/md";
 import type { TipeSoal, Opsi } from "./types/soal";
+import { BASE_URL } from "../../lib/constants";
+import { getRequest } from "../../lib/utils";
+import type Attachment from "../Attachment/types/attachment";
+import { attachmentFromJson } from "../Attachment/types/attachment";
 
 interface AddSoalFormProps {
   idJenisMateri: string
@@ -13,14 +17,14 @@ interface AddSoalFormProps {
   onRemove: (index: number) => void
   formKey: string
 }
-export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChange, defaultValues, onRemove }: AddSoalFormProps) {
+export default function AddSoalForm({ idJenisMateri, formIndex, onChange, defaultValues, onRemove }: AddSoalFormProps) {
   const pertanyaanRef = createRef<HTMLInputElement>()
   const pembahasanRef = createRef<HTMLInputElement>()
-  // TODO: change to attachment;;
-  const [audio, setAudio] = useState<File | null>(defaultValues.audioFile)
+  const [attachment, setAttachment] = useState<string | null>(defaultValues.idAttachment)
   const [tipe, setTipe] = useState<TipeSoal>(defaultValues.tipe)
   const opsi = useRef<Opsi[]>(defaultValues.opsi)
   const [opsiBenar, setOpsiBenar] = useState<string>(defaultValues.idOpsiBenar)
+  const { loading, attachments } = useAttachment()
 
   const getCurrentVals = (): NewSoal => {
     return {
@@ -29,7 +33,7 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
       idJenisMateri,
       tipe,
       idOpsiBenar: opsiBenar,
-      audioFile: audio,
+      idAttachment: attachment,
       opsi: opsi.current
     }
   }
@@ -44,12 +48,11 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
     setTipe(value)
     onChange(formIndex, newVals)
   }
-  const onAudioChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const file = e.currentTarget.files?.[0]
-    if (!file) return
+  const onAttachmentChange = (e: SelectChangeEvent<string | null>) => {
+    const value = e.target.value
     const newVals = getCurrentVals()
-    newVals.audioFile = file
-    setAudio(file)
+    newVals.idAttachment = value as string | null
+    setAttachment(value)
     onChange(formIndex, newVals)
   }
 
@@ -59,6 +62,10 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
   }
   const removeForm = () => onRemove(formIndex)
 
+  if (loading) {
+    return null
+  }
+  
   return (
     <AppCard title={`Soal Baru (${formIndex + 1})`} className="w-full mb-4 relative">
       <div className="absolute top-4 right-8">
@@ -85,7 +92,7 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
           multiline
           required
         />
-        <InputLabel className="!mt-4">Tipe</InputLabel>
+        <InputLabel className="!mt-4">Tipe *</InputLabel>
         <Select
           value={tipe}
           onChange={onTipeChange}
@@ -95,21 +102,28 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
           <MenuItem value="test">Test</MenuItem>
           <MenuItem value="practice">Practice</MenuItem>
         </Select>
-        <input
-          accept="audio/*"
-          id={`audio-${formKey}`}
-          type="file"
-          className="hidden"
-          onChange={onAudioChange}
-        />
-        <label htmlFor={`audio-${formKey}`} className="flex items-center my-4">
-          <Button component="span">Pilih Audio</Button>
-          <p className="ml-4">
-            {audio?.name ?? (
-              <span className="text-neutral-500 italic text-sm">Silahkan pilih audio (opsional)</span>
-            )}
-          </p>
-        </label>
+        <InputLabel className="!mt-4">Attachment (Opsional)</InputLabel>
+        <Select
+          value={attachment}
+          onChange={onAttachmentChange}
+          displayEmpty
+          className="!mb-4"
+        >
+          <MenuItem value={null as any}>
+            <p className="text-neutral-500 italic">Tidak ada</p>
+          </MenuItem>
+          {attachments.map((item) => {
+            return (
+              <MenuItem
+                key={item.id}
+                value={item.id}
+                className="overflow-ellipsis"
+              >
+                {item.tanggal.getTime()} - {item.nama}
+              </MenuItem>
+            )
+          })}
+        </Select>
         {opsi.current.map((item, index) => {
           const onOpsiChange: ChangeEventHandler<HTMLInputElement> = (e) => {
             updateOpsi(index, e.currentTarget.value)
@@ -156,4 +170,23 @@ export default function AddSoalForm({ idJenisMateri, formIndex, formKey, onChang
       </div>
     </AppCard>
   )
+}
+
+function useAttachment() {
+  const [loading, setLoading] = useState(true)
+  const [attachments, setAttachment] = useState<Attachment[]>([])
+
+  useEffect(() => {
+    const fetchMateri = async () => {
+      const endpoint = `${BASE_URL}/attachment`
+      setLoading(true)
+      const response = await getRequest<[]>(endpoint)
+      setLoading(false)
+      const newAttachments = response.data.map(attachmentFromJson)
+      setAttachment(newAttachments)
+    }
+    fetchMateri()
+  }, [])
+
+  return { loading, attachments }
 }

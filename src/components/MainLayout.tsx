@@ -1,6 +1,6 @@
 import { type ReactNode } from "react"
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
-import { MdLogout, MdOutlineCalendarMonth, MdOutlineDashboard, MdOutlineDescription, MdOutlineSchool } from "react-icons/md";
+import { MdLogout, MdOutlineAttachFile, MdOutlineCalendarMonth, MdOutlineDashboard, MdOutlineDescription, MdOutlineSchool } from "react-icons/md";
 
 export default function MainLayout() {
   const navigate = useNavigate()
@@ -44,6 +44,10 @@ export default function MainLayout() {
         <NavItem to="/soal">
           <MdOutlineDescription size={24} className="mr-5" />
           Soal
+        </NavItem>
+        <NavItem to="/attachment">
+          <MdOutlineAttachFile size={24} className="mr-5" />
+          Attachment
         </NavItem>
 
         <button

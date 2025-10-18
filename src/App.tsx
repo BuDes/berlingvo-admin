@@ -14,6 +14,9 @@ import SoalHomePage from "./features/Soal"
 import SoalByJenisPage from "./features/Soal/SoalByJenisPage"
 import AddSoalPage from "./features/Soal/AddSoalPage"
 import EditSoalPage from "./features/Soal/EditSoalPage"
+import AttachmentHomePage from "./features/Attachment"
+import AddAttachmentPage from "./features/Attachment/AddAttachmentPage"
+import EditAttachmentPage from "./features/Attachment/EditAttachmentPage"
 
 function App() {
   return (
@@ -38,6 +41,10 @@ function App() {
           <Route path="/soal/edit/:id" element={<EditSoalPage />} />
           <Route path="/soal/jenis/:idJenis" element={<SoalByJenisPage />} />
           <Route path="/soal/jenis/:idJenis/add" element={<AddSoalPage />} />
+
+          <Route path="/attachment" element={<AttachmentHomePage />} />
+          <Route path="/attachment/add" element={<AddAttachmentPage />} />
+          <Route path="/attachment/edit/:id" element={<EditAttachmentPage />} />
         </Route>
       </Route>
     </Routes>

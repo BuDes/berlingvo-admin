@@ -7,6 +7,6 @@ export default interface NewSoal {
   idJenisMateri: string
   tipe: TipeSoal
   idOpsiBenar: string
-  audioFile: File| null
+  idAttachment: string | null
   opsi: Opsi[]
 }

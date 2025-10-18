@@ -20,15 +20,15 @@ export default function AddSoalPage() {
     e.preventDefault()
     
     const formData = new FormData()
-    listSoal.forEach((soal, index) => {
-      if (soal.audioFile) formData.append(keys[index], soal.audioFile)
-    })
-    const parsedSoal = listSoal.map((soal, index) => {
-      const audioFile = soal.audioFile ? keys[index] : null
-      return { ...soal, audioFile }
-    })
-    console.log(parsedSoal)
-    formData.append("data", JSON.stringify(parsedSoal))
+    // OPTIMIZE: change to application/json
+    // listSoal.forEach((soal, index) => {
+    //   if (soal.audioFile) formData.append(keys[index], soal.audioFile)
+    // })
+    // const parsedSoal = listSoal.map((soal, index) => {
+    //   const audioFile = soal.audioFile ? keys[index] : null
+    //   return { ...soal, audioFile }
+    // })
+    formData.append("data", JSON.stringify(listSoal))
 
     const endpoint = `${BASE_URL}/soal/add_many`
     const response = await handleForm({
@@ -86,9 +86,10 @@ function useSoalForm(idJenis: string) {
     listSoal.current.push({
       key,
       pertanyaan: "",
+      pembahasan: "",
       idJenisMateri: idJenis,
       tipe: "practice",
-      audioFile: null,
+      idAttachment: null,
       idOpsiBenar,
       opsi: [
         { id: idOpsiBenar, isi: "" },
